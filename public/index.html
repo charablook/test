@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FixMyStuff — Réparez vos objets facilement</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1f7a8c;
+            --secondary: #e1f1f4;
+            --accent: #f4a259;
+            --dark: #0b132b;
+            --light: #ffffff;
+            --success: #2a9d8f;
+            --danger: #d64550;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark);
+            background-color: #f7f9fb;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #184c63);
+            color: var(--light);
+            padding: 70px 20px 90px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            inset: auto -20% -80px 40%;
+            height: 240px;
+            background: rgba(255, 255, 255, 0.1);
+            filter: blur(40px);
+            transform: rotate(-8deg);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        nav .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 24px;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        .hero {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            gap: 40px;
+            align-items: center;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            margin: 0 0 20px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 520px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 999px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--dark);
+            box-shadow: 0 10px 25px rgba(244, 162, 89, 0.35);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            color: var(--light);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+        }
+
+        section {
+            padding: 80px 20px;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(2rem, 3vw, 2.6rem);
+            margin-bottom: 16px;
+        }
+
+        .section-heading p {
+            color: #52616b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--light);
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow: 0 12px 30px rgba(15, 42, 62, 0.08);
+        }
+
+        .feature-card h3 {
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+
+        .workflow {
+            background: var(--secondary);
+        }
+
+        .workflow-steps {
+            display: grid;
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .step {
+            background: var(--light);
+            border-radius: 16px;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--accent);
+            color: var(--dark);
+            display: grid;
+            place-items: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .account-section {
+            background: #fff;
+        }
+
+        .account-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+        }
+
+        .account-card {
+            background: var(--secondary);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 16px 35px rgba(31, 122, 140, 0.15);
+        }
+
+        form {
+            display: grid;
+            gap: 16px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        input, select {
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid #c9d6df;
+            font-size: 1rem;
+        }
+
+        input:focus, select:focus {
+            outline: 3px solid rgba(31, 122, 140, 0.25);
+        }
+
+        .form-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-google {
+            background: #fff;
+            color: #1a73e8;
+            border: 1px solid rgba(26, 115, 232, 0.4);
+        }
+
+        .status-message {
+            padding: 14px 18px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            display: none;
+        }
+
+        .status-success {
+            background: rgba(42, 157, 143, 0.12);
+            color: var(--success);
+        }
+
+        .status-error {
+            background: rgba(214, 69, 80, 0.12);
+            color: var(--danger);
+        }
+
+        .dashboard-card {
+            background: var(--light);
+            border-radius: 20px;
+            padding: 28px;
+            display: none;
+            box-shadow: 0 18px 38px rgba(11, 19, 43, 0.12);
+        }
+
+        .testimonials {
+            background: #fff;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: var(--light);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 12px 30px rgba(15, 42, 62, 0.08);
+        }
+
+        footer {
+            background: #0b132b;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            padding: 32px 20px;
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+
+            header {
+                padding-bottom: 60px;
+            }
+
+            .hero {
+                text-align: center;
+            }
+
+            .hero p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .step {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .step-number {
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">FixMyStuff</div>
+            <ul>
+                <li><a href="#features">Fonctionnalités</a></li>
+                <li><a href="#workflow">Comment ça marche</a></li>
+                <li><a href="#professionals">Professionnels</a></li>
+                <li><a href="#account">Créer un compte</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="hero">
+            <div>
+                <h1>La plateforme qui connecte particuliers et experts de la réparation</h1>
+                <p>FixMyStuff simplifie la réparation de vos objets du quotidien grâce à un réseau de professionnels qualifiés et un espace client moderne pour suivre chaque intervention.</p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="#account">Créer mon compte gratuit</a>
+                    <a class="btn btn-secondary" href="#account">Se connecter</a>
+                </div>
+            </div>
+            <div class="hero-card">
+                <h3>Envie de proposer vos services ?</h3>
+                <p>Rejoignez la communauté FixMyStuff et recevez des demandes ciblées dans votre zone d’intervention.</p>
+                <a class="btn btn-primary" href="#account">S’inscrire comme pro</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="features">
+        <div class="section-heading">
+            <h2>Toutes vos réparations dans une seule application</h2>
+            <p>De la prise de contact à la facturation, FixMyStuff guide particuliers et professionnels à chaque étape.</p>
+        </div>
+        <div class="features-grid">
+            <article class="feature-card">
+                <h3>Diagnostic simplifié</h3>
+                <p>Décrivez votre problème, ajoutez des photos et obtenez rapidement une estimation réaliste du coût de réparation.</p>
+            </article>
+            <article class="feature-card">
+                <h3>Suivi en temps réel</h3>
+                <p>Chaque intervention dispose d’un fil de discussion, de statuts clairs et de notifications automatisées.</p>
+            </article>
+            <article class="feature-card">
+                <h3>Paiement sécurisé</h3>
+                <p>Réglez vos réparations en ligne grâce à une solution de paiement certifiée et un système d’acompte adaptable.</p>
+            </article>
+            <article class="feature-card">
+                <h3>Profils vérifiés</h3>
+                <p>Les professionnels sont audités avant validation, avec vérification d’identité et assurance responsabilité civile.</p>
+            </article>
+        </div>
+    </section>
+
+    <section id="workflow" class="workflow">
+        <div class="section-heading">
+            <h2>Un parcours client pensé pour la transparence</h2>
+            <p>Des étapes claires pour rassurer les clients et faciliter la collaboration avec les professionnels.</p>
+        </div>
+        <div class="workflow-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div>
+                    <h3>Déposez votre demande</h3>
+                    <p>Créez un compte, choisissez votre rôle et décrivez votre objet. Les professionnels disponibles sont automatiquement notifiés.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div>
+                    <h3>Validez le devis</h3>
+                    <p>Comparez les propositions reçues, discutez via le chat intégré et validez le devis retenu en quelques clics.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div>
+                    <h3>Suivez la réparation</h3>
+                    <p>Suivez l’intervention en direct, recevez des mises à jour clés et notez le professionnel une fois la réparation terminée.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="professionals">
+        <div class="section-heading">
+            <h2>Une console métier complète pour les pros</h2>
+            <p>FixMyStuff vous aide à développer votre activité grâce à des outils pensés pour gérer votre relation client.</p>
+        </div>
+        <div class="features-grid">
+            <article class="feature-card">
+                <h3>Pipeline d’opportunités</h3>
+                <p>Classez vos demandes par état (nouveau, devis envoyé, en cours, terminé) et organisez votre carnet de commande.</p>
+            </article>
+            <article class="feature-card">
+                <h3>Facturation automatisée</h3>
+                <p>Générez devis et factures conformes avec signature en ligne et suivi des paiements reçu / en attente.</p>
+            </article>
+            <article class="feature-card">
+                <h3>Gestion d’équipe</h3>
+                <p>Ajoutez vos techniciens, assignez des missions et suivez leur performance grâce au reporting consolidé.</p>
+            </article>
+            <article class="feature-card">
+                <h3>Référencement local</h3>
+                <p>Boostez votre visibilité via votre page pro FixMyStuff et récoltez des avis vérifiés après chaque intervention.</p>
+            </article>
+        </div>
+    </section>
+
+    <section id="account" class="account-section">
+        <div class="section-heading">
+            <h2>Créer un compte ou se connecter</h2>
+            <p>Un système d’authentification unifié pour les particuliers et les professionnels. Choisissez votre mode de connexion.</p>
+        </div>
+        <div class="account-grid">
+            <div class="account-card">
+                <h3>Créer un compte</h3>
+                <p>Créez un compte en quelques secondes et accédez immédiatement à votre espace client ou pro.</p>
+                <div id="register-status" class="status-message"></div>
+                <form id="register-form">
+                    <div>
+                        <label for="register-name">Nom complet</label>
+                        <input type="text" id="register-name" name="name" placeholder="Jean Dupont" required />
+                    </div>
+                    <div>
+                        <label for="register-email">Adresse email</label>
+                        <input type="email" id="register-email" name="email" placeholder="vous@example.com" required />
+                    </div>
+                    <div>
+                        <label for="register-password">Mot de passe</label>
+                        <input type="password" id="register-password" name="password" minlength="8" required />
+                    </div>
+                    <div>
+                        <label for="register-role">Je suis</label>
+                        <select id="register-role" name="role" required>
+                            <option value="customer">Un particulier</option>
+                            <option value="professional">Un professionnel</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-primary" type="submit">Créer mon compte</button>
+                        <button class="btn btn-google" type="button" id="register-google">Continuer avec Google</button>
+                    </div>
+                </form>
+            </div>
+            <div class="account-card">
+                <h3>Se connecter</h3>
+                <p>Retrouvez vos demandes, vos missions ou votre planning en vous connectant à votre espace.</p>
+                <div id="login-status" class="status-message"></div>
+                <form id="login-form">
+                    <div>
+                        <label for="login-email">Adresse email</label>
+                        <input type="email" id="login-email" name="email" placeholder="vous@example.com" required />
+                    </div>
+                    <div>
+                        <label for="login-password">Mot de passe</label>
+                        <input type="password" id="login-password" name="password" required />
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-primary" type="submit">Connexion</button>
+                        <button class="btn btn-google" type="button" id="login-google">Se connecter avec Google</button>
+                    </div>
+                </form>
+            </div>
+            <div class="dashboard-card" id="dashboard-card">
+                <h3>Bonjour <span id="current-user-name"></span> 👋</h3>
+                <p>Vous êtes connecté en tant que <strong id="current-user-role"></strong>. Accédez à vos demandes, missions et notifications depuis votre tableau de bord.</p>
+                <ul>
+                    <li>Historique complet des interventions</li>
+                    <li>Messagerie sécurisée</li>
+                    <li>Notifications temps réel</li>
+                </ul>
+                <button class="btn btn-secondary" id="logout-btn">Se déconnecter</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="section-heading">
+            <h2>Ils recommandent FixMyStuff</h2>
+            <p>Particuliers et experts témoignent de l’impact de la plateforme sur leur quotidien.</p>
+        </div>
+        <div class="testimonial-grid">
+            <article class="testimonial-card">
+                <p>« En quelques clics j’ai trouvé un réparateur de confiance pour ma machine à laver. Suivi impeccable et devis clair ! »</p>
+                <strong>Sophie, Paris</strong>
+            </article>
+            <article class="testimonial-card">
+                <p>« FixMyStuff me permet de gérer toutes mes demandes sans e-mails dispersés. Mes clients adorent la transparence. »</p>
+                <strong>Yanis, réparateur électroménager</strong>
+            </article>
+            <article class="testimonial-card">
+                <p>« L’espace pro est top : je pilote mon équipe, mes devis et mes factures depuis un seul endroit. »</p>
+                <strong>Léa, responsable atelier</strong>
+            </article>
+        </div>
+    </section>
+
+    <section id="contact" class="workflow">
+        <div class="section-heading">
+            <h2>Prêts à rejoindre FixMyStuff ?</h2>
+            <p>Notre équipe vous accompagne pour lancer votre compte entreprise ou pour planifier votre première réparation.</p>
+        </div>
+        <div class="workflow-steps">
+            <div class="step">
+                <div class="step-number">📞</div>
+                <div>
+                    <h3>Contact support</h3>
+                    <p>Envoyez-nous un email à <a href="mailto:hello@fixmystuff.com">hello@fixmystuff.com</a> ou appelez-nous au <strong>+33 1 84 60 90 10</strong>.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">🤝</div>
+                <div>
+                    <h3>Onboarding personnalisé</h3>
+                    <p>Nous importons vos informations, configurons vos équipes et vous aidons à définir vos zones d’intervention.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 FixMyStuff. Tous droits réservés. <a href="mailto:contact@fixmystuff.com">contact@fixmystuff.com</a></p>
+    </footer>
+
+    <script src="app.js" defer></script>
+</body>
+</html>
