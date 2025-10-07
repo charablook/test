@@ -6,38 +6,39 @@ Cette note détaille une architecture de référence pour lancer rapidement l'ap
 
 ## Composants principaux
 
-### MVP actuel (proof-of-concept)
+### 1. Front-end
+- **Technologies** : Next.js pour le web, React Native pour mobile.
+- **Fonctionnalités clés** :
+  - Dashboard client et professionnel.
+  - Formulaires dynamiques pour la création de demandes.
+  - Intégration temps réel avec les notifications (WebSocket/Push).
 
-- **Front-end** : landing page statique servie par Express (`public/index.html`) avec un script léger (`public/app.js`) gérant les formulaires d'inscription et de connexion.
-- **Back-end** : serveur Node.js/Express (`server.js`) exposant une API REST minimaliste (`/api/register`, `/api/login`, `/api/session`, `/api/logout`) et les endpoints OAuth Google (`/auth/google`). Authentification gérée via `passport` (stratégies locale + Google) et `express-session`.
-- **Base de données** : SQLite embarquée (pilote `sqlite3`) stockée dans `data/fixmystuff.db` pour conserver les utilisateurs, leurs rôles (particulier/professionnel) et le fournisseur d'authentification.
-- **Sessions** : stockées en mémoire (implémentation Express par défaut) pour simplifier la mise en route. À remplacer par un store persistant (Redis, SQL) lors du passage en production.
+### 2. API Gateway & Back-end
+- **Framework** : NestJS (Node.js) pour bénéficier d'une structure modulaire et de TypeScript.
+- **Services** :
+  - Authentification et gestion des rôles (JWT + OAuth 2.0).
+  - Gestion des demandes et des missions.
+  - Système de devis et paiements.
+  - Service de notifications.
+- **Patterns** : architecture hexagonale avec séparation domaine/application/infrastructure.
 
-Cette base offre un socle fonctionnel pour tester rapidement le parcours d'inscription/connexion tout en restant légère.
+### 3. Base de données
+- **PostgreSQL** : schéma relationnel (utilisateurs, demandes, missions, transactions, évaluations).
+- **Pratiques** : migrations versionnées via Prisma ou TypeORM.
+- **Indexation** : index géospatiaux (PostGIS) pour les recherches par localisation.
 
-### Cible long terme
+### 4. Asynchrone & Temps réel
+- **Redis** : files BullMQ pour la gestion des jobs (envoi d'emails, matching, rappels).
+- **WebSockets** : passerelle pour notifications en direct.
 
-La vision cible reste orientée vers une architecture modulaire et scalable :
+### 5. Stockage et médias
+- **S3** : stockage des photos, devis, factures.
+- **Traitement** : lambda pour redimensionnement et anonymisation des documents sensibles.
 
-1. **Front-end**
-   - Next.js pour le web, React Native pour mobile.
-   - Interfaces riches (dashboard, formulaires dynamiques, notifications temps réel).
-
-2. **API Gateway & Back-end**
-   - Framework structurant (NestJS/FastAPI) et séparation claire domaine/application/infrastructure.
-   - Services dédiés : authentification (JWT + OAuth 2.0), matching, devis/paiement, notifications.
-
-3. **Base de données**
-   - PostgreSQL avec migrations versionnées (Prisma/TypeORM) et extension PostGIS pour le géomatching.
-
-4. **Asynchrone & Temps réel**
-   - Redis + BullMQ pour les jobs, WebSockets ou Web Push pour les notifications instantanées.
-
-5. **Stockage & médias**
-   - Stockage objet compatible S3, traitements serverless pour l'optimisation des médias.
-
-6. **Observabilité**
-   - Stack de logs centralisée (ELK/Datadog), métriques (Prometheus/Grafana) et traçabilité (OpenTelemetry).
+### 6. Observabilité
+- **Logging** : Winston + ELK/Datadog.
+- **Metrics** : Prometheus + Grafana.
+- **Tracing** : OpenTelemetry.
 
 ## Sécurité
 - Conformité RGPD (cryptage at-rest & in-transit).

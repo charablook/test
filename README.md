@@ -2,36 +2,6 @@
 
 FixMyStuff est une plateforme qui met en relation des particuliers ayant des objets à réparer et des professionnels qualifiés capables d'intervenir rapidement. Ce dépôt documente la vision produit, l'architecture technique et les premières spécifications fonctionnelles de l'application.
 
-Une première implémentation d'un **système de comptes** est disponible dans ce dépôt. Elle propose :
-
-- L'inscription et la connexion par email/mot de passe pour les particuliers et les professionnels.
-- Un point d'entrée OAuth Google (activable en ajoutant vos clés) pour s'authentifier sans mot de passe.
-- Un stockage persistant des comptes dans une base SQLite locale.
-- Une interface web minimaliste permettant de créer un compte, se connecter et visualiser son état de session.
-
-## Démarrage rapide
-
-### Prérequis
-
-- Node.js 18+
-
-### Installation
-
-```bash
-npm install
-cp .env.example .env
-```
-
-Modifiez `.env` pour définir `SESSION_SECRET` et, si besoin, vos identifiants Google OAuth (`GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`). Renseignez `BASE_URL` avec l'URL publique de l'application (par défaut `http://localhost:3000`).
-
-### Lancer l'application
-
-```bash
-npm start
-```
-
-Le serveur Express démarre sur `http://localhost:3000` et sert la landing page incluant le système de comptes. La base SQLite est créée automatiquement dans le dossier `data/`.
-
 ## Vision
 
 L'application vise à simplifier la réparation d'objets du quotidien (électroménager, électronique, ameublement, etc.) en offrant :
